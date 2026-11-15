@@ -131,6 +131,9 @@
     show(
       h("h1", {}, "A decisions game"),
       h("p", {}, "You'll be shown short situations from a strategy game and asked what you would do, with 20 seconds for each. A session is 20 situations, about 10 minutes. You can play as many sessions as you like, and stop and come back at any time with the same link."),
+      h("p", {}, h("b", {}, "Please play on a computer with a keyboard."), " Some answers are typed against the clock, which is too slow on a phone."),
+      window.matchMedia("(pointer: coarse)").matches && !window.matchMedia("(any-pointer: fine)").matches
+        ? h("p", { style: "color:#b3261e" }, h("b", {}, "This looks like a phone or tablet. Please open your link on a computer instead.")) : null,
       h("p", {}, "Your answers are stored without your name or any way to identify you. They will be kept and may be published, still without your name, as part of research on how decisions are made in games. You can stop at any time."),
       h("h2", {}, "How many hours a week do you play video games?"),
       games.map((g) => h("label", {}, h("input", { type: "radio", name: "g", value: g, on: { change: check } }), " ", g)),
