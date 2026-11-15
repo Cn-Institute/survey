@@ -207,7 +207,7 @@
     document.addEventListener("keydown", keys);
     const bar = h("div"), clock = h("div", { class: "clock" }, bar), secs = h("div", { class: "secs" });
     show(clock, secs,
-      h("div", { class: "pane" }, h("div", { class: "desc" }, f.desc.map((d) => h("p", {}, d))), mapTable(f.map)),
+      h("div", { class: "strip" }, f.strip.map(([k, v]) => h("div", { class: "cell" }, h("span", { class: "k" }, k), h("span", { class: "v" }, v)))),
       h("div", { class: "q" }, f.text), choices, ownBox);
     if (pl.form === "one") own.focus();
     const tick = () => {
