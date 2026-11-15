@@ -1,0 +1,30 @@
+:root { --fg: #1d2330; --muted: #5b6475; --line: #d8dce4; --accent: #2457c5; --warn: #b3261e; --bg: #fbfbfd; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 17px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--fg); background: var(--bg); }
+header { display: flex; justify-content: space-between; padding: .6rem 1rem; border-bottom: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+main { max-width: 46rem; margin: 0 auto; padding: 1rem; }
+h1 { font-size: 1.4rem; margin: .5rem 0 1rem; }
+h2 { font-size: 1.1rem; margin: 1.2rem 0 .4rem; }
+button { font: inherit; padding: .55rem 1.1rem; border: 1px solid var(--accent); background: var(--accent); color: #fff; border-radius: 6px; cursor: pointer; }
+button.alt { background: #fff; color: var(--accent); }
+button:disabled { opacity: .45; cursor: default; }
+input[type=text], textarea { font: inherit; width: 100%; padding: .5rem; border: 1px solid var(--line); border-radius: 6px; }
+label { display: block; margin: .3rem 0; }
+.q { white-space: pre-wrap; font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: .92rem; background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: .8rem; }
+.desc { margin: .4rem 0 .8rem; }
+.desc p { margin: .15rem 0; }
+.row { display: flex; gap: .5rem; flex-wrap: wrap; margin: .8rem 0; }
+.clock { height: 10px; background: var(--line); border-radius: 5px; overflow: hidden; margin: .4rem 0 .2rem; }
+.clock div { height: 100%; background: var(--accent); width: 100%; }
+.clock.low div { background: var(--warn); }
+.secs { font-variant-numeric: tabular-nums; color: var(--muted); font-size: .9rem; }
+.pane { display: flex; gap: 1rem; align-items: flex-start; flex-wrap: wrap; }
+table.map { border-collapse: collapse; font-family: ui-monospace, Consolas, monospace; font-size: .85rem; }
+table.map td, table.map th { width: 2rem; height: 2rem; text-align: center; border: 1px solid var(--line); }
+table.map th { border: none; color: var(--muted); font-weight: normal; }
+table.map td.on { background: #eef2fb; font-weight: bold; }
+.legend { color: var(--muted); font-size: .85rem; }
+.note { color: var(--muted); font-size: .9rem; }
+.saved { color: #1e7a3c; }
+dialog { max-width: 44rem; border: 1px solid var(--line); border-radius: 8px; }
+.brief h2 { margin-top: 1rem; }
