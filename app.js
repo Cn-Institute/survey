@@ -35,7 +35,7 @@
 
   // ---------- state ----------
   const KEY = () => `s875:${P}`;
-  const blank = () => ({ p: P, v: C.VERSION, consent: null, gaming: null, briefed: false, recs: {}, shown: {},
+  const blank = () => ({ p: P, v: C.VERSION, consent: null, gaming: null, briefed: false, storied: false, recs: {}, shown: {},
                          surveys: {}, outbox: [] });
   const save = () => localStorage.setItem(KEY(), JSON.stringify(st));
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY())); } catch { return null; } };
@@ -104,6 +104,7 @@
   // ---------- screens ----------
   function route() {
     if (!st.consent) return consent();
+    if (!st.storied) return background();
     if (!st.briefed) return briefing();
     for (const pl of practice()) if (!st.recs[rkey(0, pl.id)]) return between(0, pl);
     for (let s = 1; s <= DATA.sets.length; s++) {
@@ -139,6 +140,13 @@
       games.map((g) => h("label", {}, h("input", { type: "radio", name: "g", value: g, on: { change: check } }), " ", g)),
       h("label", { style: "margin-top:1rem" }, box, " I agree to take part, and to my answers being kept and published without my name."),
       h("div", { class: "row" }, go));
+  }
+
+  function background() {
+    where.textContent = "Background";
+    show(h("h1", {}, "Background"), h("div", { html: window.BACKGROUND }),
+      h("p", { class: "note" }, "You can read this again at any time from the Background link at the top." + (st.briefed ? "" : " Next come the rules.")),
+      h("div", { class: "row" }, h("button", { on: { click: () => { st.storied = true; save(); route(); } } }, st.briefed ? "Continue" : "Continue to the rules")));
   }
 
   function briefing() {
@@ -275,17 +283,19 @@
       st = blank();
       const r = await fromStore();
       if (r) {
-        if (r.player) { st.consent = { at: r.player.consent_at }; st.gaming = r.player.gaming; st.briefed = true; }
+        if (r.player) { st.consent = { at: r.player.consent_at }; st.gaming = r.player.gaming; st.briefed = true; st.storied = true; }
         for (const a of r.answers || []) st.recs[rkey(a.s, a.s === 0 ? a.item : Number(a.item))] = a;
         for (const s of r.surveys || []) st.surveys[s] = { at: "", next: true };
       }
       save();
     }
     settleLeft();
-    const bl = document.getElementById("brief-link"), dlg = document.getElementById("brief-dialog");
-    document.getElementById("brief-text").innerHTML = window.BRIEFING;
-    bl.hidden = false;
-    bl.addEventListener("click", (e) => { e.preventDefault(); dlg.showModal(); });
+    const dlg = document.getElementById("brief-dialog"), txt = document.getElementById("brief-text");
+    for (const [id, html] of [["brief-link", window.BRIEFING], ["bg-link", window.BACKGROUND]]) {
+      const l = document.getElementById(id);
+      l.hidden = false;
+      l.addEventListener("click", (e) => { e.preventDefault(); txt.innerHTML = html; dlg.showModal(); });
+    }
     document.getElementById("brief-close").addEventListener("click", () => dlg.close());
     route();
   }
